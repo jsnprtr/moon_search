@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+	<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113493743-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-113493743-1');
+</script>
+
+		<!-- Standard Meta -->
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+		<!-- Site Properties -->
+		<title>Apollo 11 Flight Transcripts</title>
+
+		<link rel="stylesheet" type="text/css" href="../semantic/dist/components/reset.css">
+		<link rel="stylesheet" type="text/css" href="../semantic/dist/components/site.css">
+
+		<link rel="stylesheet" type="text/css" href="../semantic/dist/components/container.css">
+		<link rel="stylesheet" type="text/css" href="../semantic/dist/components/grid.css">
+		<link rel="stylesheet" type="text/css" href="../semantic/dist/components/header.css">
+		<link rel="stylesheet" type="text/css" href="../semantic/dist/components/image.css">
+		<link rel="stylesheet" type="text/css" href="../semantic/dist/components/menu.css">
+		<link rel="stylesheet" type="text/css" href="../semantic/dist/components/input.css">
+		<link rel="stylesheet" type="text/css" href="../semantic/dist/components/button.css">
+		<link rel="stylesheet" type="text/css" href="../semantic/dist/components/checkbox.css">
+		<link rel="stylesheet" type="text/css" href="../semantic/dist/components/card.css">
+
+		<link rel="stylesheet" type="text/css" href="../semantic/dist/components/divider.css">
+		<link rel="stylesheet" type="text/css" href="../semantic/dist/components/list.css">
+		<link rel="stylesheet" type="text/css" href="../semantic/dist/components/segment.css">
+		<link rel="stylesheet" type="text/css" href="../semantic/dist/components/dropdown.css">
+		<link rel="stylesheet" type="text/css" href="../semantic/dist/components/icon.css">
+		<script
+		src="https://code.jquery.com/jquery-2.1.4.min.js"
+		integrity="sha256-8WqyJLuWKRBVhxXIL1jBDD7SDxU936oZkCnxQbWwJVw="
+		crossorigin="anonymous"></script>
+		<script type="text/javascript" src="../assets/js/cards.js"></script>
+		<script type="text/javascript" src="../assets/js/params.js"></script>
+		<script type="text/javascript" src="../assets/js/search.js"></script>
+
+		<style type="text/css">
+		  .ui.cards > .card {
+			  width: 400px;
+			}
+			i.external.share.icon {
+				margin-left: 0.5em;
+			}
+	  </style>
+	  <script type="text/javascript">
+
+	  	function updateUi(response, params){
+	  		var cardHolder = $("#cardHolder"),
+	  			document = response.response.docs[0],
+	  			card = new apollo.Card(document, null);
+	  		cardHolder.empty();
+	  		cardHolder.append(card.createCard());
+	  	}
+
+	  	function getResult(id){
+	  		var params = new apollo.Params();
+	  		params.addParam("q", "id:" + id);
+	  		apollo.search(params, updateUi);
+	  	}
+
+	  	$( document ).ready(function() {
+	  		var params = new URLSearchParams(window.location.search),
+	  			id = params.get("id");
+	  		if(id){
+	  			getResult(id);
+	  		}
+	  	});
+
+	  </script>
+	</head>
+	<body>
+		<div class="ui main container">
+			<div id="cardHolder" class="ui cards">
+				<div class="ui card">
+					<div class="content">
+						<b>Time:</b>
+						00 00 01 27
+						<br>
+						<b>CDR:</b>
+						Roger. We got a roll program.
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
