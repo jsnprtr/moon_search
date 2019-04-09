@@ -1,0 +1,27 @@
+{
+  "name": "apollo",
+  "version": "1.0.0",
+  "description": "Apollo transcripts made searchable",
+  "main": "assets/js/search.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jsnprtr/moon_search.git"
+  },
+  "keywords": [
+    "search",
+    "moon",
+    "apollo"
+  ],
+  "author": "Jason Porter",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jsnprtr/moon_search/issues"
+  },
+  "homepage": "https://github.com/jsnprtr/moon_search#readme",
+  "dependencies": {
+    "semantic-ui": "^2.4.2"
+  }
+}
