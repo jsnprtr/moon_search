@@ -1,0 +1,184 @@
+<!doctype html>
+<html>
+	<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113493743-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-113493743-1');
+    </script>
+		<!-- Standard Meta -->
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+		<!-- Site Properties -->
+		<title>Apollo 11 Flight Transcripts</title>
+
+		<link rel="stylesheet" type="text/css" href="../../semantic/dist/semantic.min.css">
+		<!-- <script
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous"></script> -->
+      <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../../semantic/dist/semantic.min.js"></script>
+
+		<script type="text/javascript" src="../../assets/js/cards.js"></script>
+		<script type="text/javascript" src="../../assets/js/search.js"></script>
+		<script type="text/javascript" src="../../assets/js/params.js"></script>
+		<script type="text/javascript" src="../../assets/js/main.js"></script>
+
+		<style type="text/css">
+      body {
+        padding-top: 60px;
+      }
+      .ui.menu.search {
+        position: absolute;
+        top: 0px;
+        width: 100%;
+      }
+      .ui.main.container {
+        height: 100%;
+        padding-top: 100px;
+      }
+      h5.text {
+        position: absolute;
+        top: 60px;
+      }
+      .ui.column {
+        height: 100%;
+      }
+      .ui.cards {
+        height: 100%;
+      }
+      .wide.column {
+        height: 100%;
+      }
+		  .ui.cards > .card {
+			  width: 400px;
+			}
+			i.external.share.icon {
+				margin-left: 0.5em;
+			}
+      .ui.cards>.card.selected {
+        background-color: #ffeecc; 
+      }
+	  </style>
+	</head>
+	<body>
+		<div class="ui menu search">
+			<div class="ui container">
+				<div class="header item">
+	        <img class="logo" src="../../assets/images/rocket.svg">
+	        Apollo Transcripts
+	      </div>
+				<div class="ui action left icon input focus">
+					<i class="search icon"></i>
+					<input id="search" type="text" placeholder="Search...">
+					<div id="searchButton" class="ui teal button">Search</div>
+				</div>
+			</div>
+			
+		</div>
+		<div class="ui main container">
+			<h5 class="text" id="resultsText">Waiting for search query...</h5>
+      <h5 class="text" id="sortText"></h5>
+      <div class="ui four column divided grid">
+      	<div class="three wide column">
+          <div class="ui compact menu">
+            <div class="ui simple dropdown item" tabindex="0">
+              Sort
+              <i class="dropdown icon"></i>
+              <div id="sort" class="menu" tabindex="-1">
+                <div value="sum(mul(86400, day), mul(3600, hour), mul(60, minute), second) desc" class="item">Time desc</div>
+                <div value="sum(mul(86400, day), mul(3600, hour), mul(60, minute), second) asc" class="item">Time asc</div>
+                <div class="divider"></div>
+                <div value="score desc"class="item">Relevance desc</div>
+                <div value="score asc" class="item">Relevance asc</div>
+              </div>
+            </div>
+          </div>
+				  <div class="ui divider"></div>
+				  <div class="ui text">
+				  	<h5>Tx:</h5>
+				  </div>
+				  <div id="facets">
+					  <div class="ui checkbox">
+						  <input type="checkbox" name="example">
+						  <label>Buzz</label>
+						</div>
+						<br>
+						<div class="ui checkbox">
+						  <input type="checkbox" name="example">
+						  <label>Neil</label>
+						</div>
+						<br>
+						<div class="ui checkbox">
+						  <input type="checkbox" name="example">
+						  <label>Mike Collins</label>
+						</div>
+					</div>
+      	</div>
+    		<div class="six wide column">
+    			<h3>
+    				Search Results:
+    			</h3>
+    			<div id="cardHolder" class="ui cards" style="overflow-y: scroll">
+    				<div class="ui card">
+    					<div class="content">
+    						<b>Time:</b>
+    						00 00 01 27
+    						<br>
+    						<b>CDR:</b>
+    						Roger. We got a roll program.
+    					</div>
+    				</div>
+    				<div class="ui card">
+    					<div class="content">
+    						<b>Time:</b>
+    						00 00 00 15
+    						<br>
+    						<b>CMP:</b>
+    						Roger. Roll.
+    					</div>
+    				</div>
+    			</div>
+    		</div>
+  			<div class="six wide column">
+  				<h3>
+    				Results in context:
+    			</h3>
+    			<div id="context" class="ui cards" style="overflow-y: scroll">
+    				<a href="#">Click for earlier results...</a>
+    				<div class="ui card">
+    					<div class="content">
+    						<b>Time:</b>
+    						00 00 01 27
+    						<br>
+    						<b>CDR:</b>
+    						Roger. We got a roll program.
+    					</div>
+    				</div>
+    				<div class="ui card">
+    					<div class="content">
+    						<b>Time:</b>
+    						00 00 00 15
+    						<br>
+    						<b>CMP:</b>
+    						Roger. Roll.
+    					</div>
+    				</div>
+    			</div>
+  			</div>
+  			<div class="one wide column">
+  				<h3>
+            Timeline
+          </h3>
+  			</div>
+      </div>
+		</div>
+	</body>
+</html>

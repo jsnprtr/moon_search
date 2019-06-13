@@ -1,6 +1,6 @@
 window.apollo = window.apollo || {};
 
-window.apollo.SEARCH_HOST = "http://" + window.location.host + ":8983";
+window.apollo.SEARCH_HOST = "http://" + window.location.hostname + ":8983";
 window.apollo.COLLECTION = "transcripts";
 
 window.apollo.buildQuery = function(params){
@@ -12,8 +12,8 @@ window.apollo.search = function(params, callback){
           'event_category': 'Search',
           'event_label': params.getParam('q')
         });
-	$.get(this.buildQuery(params), function(response){
-		if(response !== undefined){
+	return $.get(this.buildQuery(params), function(response){
+		if(typeof callback == 'function' ){
 			callback(response, params);
 		}
 	});

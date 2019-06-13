@@ -2,9 +2,15 @@ window.apollo = window.apollo || {};
 
 window.apollo.Card = function(doc, highlight){
 	var timestamp = doc.timestamp,
+		totalSeconds = doc.totalSeconds,
  		message = getMessage(doc.message, highlight),
 		tx = doc.transmitter,
 		id = doc.id;
+
+	function addClass(className) {
+		this.classNames = this.classNames || [];
+		this.classNames.push(className);
+	}
 
 
 	// Get message with ellipses or not
@@ -43,27 +49,34 @@ window.apollo.Card = function(doc, highlight){
 	}
 
 	//create Content
-	function createContent(timestamp, message, tx){
+	function createContent(timestamp, message, tx, totalSeconds){
 		content = document.createElement("div");
 		content.className = "content";
-		content.innerHTML = "<b>Time: </b>" + 
+		var utc = new Date();
+		totalSeconds = -14552880000 + totalSeconds;
+		utc.setTime(totalSeconds);
+		content.innerHTML = "<b>Time (day, hour, minute, second): </b>" + 
 					timestamp + 
+					"<br>" + 
+					"<b>Time (UTC): </b>" +
+					utc.toGMTString() +
 					"<a href=\"snippet.html?id=" + id +"\" target=\"_blank\">" +
 					"<i class=\"external share icon\"></i>" +
 					"</a>" +
 					"<br>" + 
 					"<b>" + tx + ": </b>" + 
 					message;
+		
 		return content;
 	}
 
-	function createCard(){
+	function createCard(clickEvent){
 		var card = document.createElement("div"),
-			content = createContent(timestamp, message.text, tx);
+			content = createContent(timestamp, message.text, tx, totalSeconds);
 		card.className = "ui card";
 		$(card).append(content);
 		if(message.fullText){
-			var hiddenContent = createContent(timestamp, message.fullText, tx),
+			var hiddenContent = createContent(timestamp, message.fullText, tx, totalSeconds);
 				showMoreElement = document.createElement('div');
 			hiddenContent.setAttribute("style", "display:none;");
 			showMoreElement.className = "extra content";
@@ -72,8 +85,15 @@ window.apollo.Card = function(doc, highlight){
 			card.append(showMoreElement);
 			card.append(hiddenContent);
 		}
-		
+		$(card).on('click', clickEvent);
+		for(var index in this.classNames) {
+			card.classList.add(this.classNames[index]);
+		}
+		card.dataset['datetime'] = totalSeconds;
 		return card;
 	}
-	return {createCard: createCard};
+	return {
+		createCard: createCard,
+		addClass: addClass
+	};
 };
