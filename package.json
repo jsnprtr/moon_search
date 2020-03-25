@@ -22,6 +22,6 @@
   },
   "homepage": "https://github.com/jsnprtr/moon_search#readme",
   "dependencies": {
-    "semantic-ui": "^2.4.2"
+    "fomantic-ui": "^2.8.4"
   }
 }
