@@ -18,48 +18,29 @@
 		<!-- Site Properties -->
 		<title>Apollo 11 Flight Transcripts</title>
 
-		<link rel="stylesheet" type="text/css" href="../semantic/dist/semantic.min.css">
-		<script
-      src="https://code.jquery.com/jquery-3.1.1.min.js"
-      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-      crossorigin="anonymous"></script>
-    <script src="../semantic/dist/semantic.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="../../semantic/dist/semantic.min.css">
+    	<script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+    	<script src="../../semantic/dist/semantic.min.js"></script>
     
-		<script type="text/javascript" src="../assets/js/cards.js"></script>
-		<script type="text/javascript" src="../assets/js/params.js"></script>
-		<script type="text/javascript" src="../assets/js/search.js"></script>
+		<script type="text/javascript" src="../../assets/js/cards.js"></script>
+		<script type="text/javascript" src="../../assets/js/params.js"></script>
+		<script type="text/javascript" src="../../assets/js/search.js"></script>
+		<script type="text/javascript" src="../../assets/js/snippet.js"></script>
 
 		<style type="text/css">
-		  .ui.cards > .card {
+		.ui.cards > .card {
 			  width: 400px;
-			}
-			i.external.share.icon {
-				margin-left: 0.5em;
-			}
+		}
+		i.external.share.icon {
+			margin-left: 0.5em;
+		}
+		.ui.main.container {
+			margin-top: 1em;
+		}
 	  </style>
 	  <script type="text/javascript">
 
-	  	function updateUi(response, params){
-	  		var cardHolder = $("#cardHolder"),
-	  			document = response.response.docs[0],
-	  			card = new apollo.Card(document, null);
-	  		cardHolder.empty();
-	  		cardHolder.append(card.createCard());
-	  	}
-
-	  	function getResult(id){
-	  		var params = new apollo.Params();
-	  		params.addParam("q", "id:" + id);
-	  		apollo.search(params, updateUi);
-	  	}
-
-	  	$( document ).ready(function() {
-	  		var params = new URLSearchParams(window.location.search),
-	  			id = params.get("id");
-	  		if(id){
-	  			getResult(id);
-	  		}
-	  	});
+	  	
 
 	  </script>
 	</head>
