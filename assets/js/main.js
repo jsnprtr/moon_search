@@ -9,11 +9,11 @@ var sortMap = {
 		"name": "Relevance",
 		"value": "score"
 	}
-}
+};
 
 $(document).bind('ajaxSend', function(event){
   //console.log('ajax sent');
-})
+});
 // Get resultstext
 function getResultsText(numFound, input){
 	var results = "results";
@@ -67,7 +67,7 @@ function updateContextCards(results, totalSeconds, incremental) {
 	var selected = results.length - 6;
 	for(var i = 0; i < results.length; i++) {
 		var card = new apollo.Card(results[i]);
-		if(results[i].totalSeconds == totalSeconds) {
+		if(results[i].totalSeconds == totalSeconds && !incremental) {
 			card.addClass('selected');
 		}
 		if(incremental == 'up'){
@@ -107,18 +107,17 @@ function updateContext(results, incremental) {
 		datetime = results.totalSeconds;
 	}
 	var responses = {};
-	var when;
+	var d1, d2;
 	if(!incremental) {
-		when = $.when(
-			apollo.search(buildContextParams(datetime, 'asc')),
-			apollo.search(buildContextParams(datetime, 'desc'))
-		);
+		d1 = apollo.search(buildContextParams(datetime, 'asc'));
+		d2 = apollo.search(buildContextParams(datetime, 'desc'));
 	} else {
 		var direction = incremental == 'down' ? 'asc' : 'desc';
-		when = $.when(apollo.search(buildContextParams(datetime, direction)));
+		d1 = apollo.search(buildContextParams(datetime, direction));
 	}
+	when = $.when(d1, d2);
 	when.done(function(rs1, rs2){
-		var results = []
+		var results = [];
 		if(rs2 && rs2[0].response.docs) {
 			results = rs2[0].response.docs.reverse();
 		}
@@ -240,14 +239,14 @@ $( document ).ready(function() {
 	});
 	$('#context').on('scroll', function(event) {
 		var o = event.target;
-		if(o.offsetHeight + o.scrollTop == o.scrollHeight){
+		if(o.offsetHeight + o.scrollTop >= o.scrollHeight - 100){
 			scroll('down');
 		}
 
 		if(o.scrollTop == 0) {
 			scroll('up');
 		}
-	})
+	});
 	var searchQueries = [
 		"\"oval room\"",
 		"\"eagle has landed\"",
