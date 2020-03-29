@@ -1,5 +1,7 @@
+import $ from 'jquery';
+
 // Add event handler
-var TOTAL_SECONDS_QUERY = "mul(sum(mul(86400, day), mul(3600, hour), mul(60, minute), second),1000)";
+var TOTAL_SECONDS_QUERY = "sum(mul(86400, day), mul(3600, hour), mul(60, minute), second)";
 var sortMap = {
 	"time": {
 		"name": "Time",
@@ -85,10 +87,11 @@ function updateContextCards(results, totalSeconds, incremental) {
 
 function buildContextParams(datetime, direction) {
 	var params = new apollo.Params();
+	var range;
 	if(direction == "desc") {
-		var range = "{!frange u=" + datetime + "}" + TOTAL_SECONDS_QUERY;
+		range = "{!frange u=" + datetime + "}" + TOTAL_SECONDS_QUERY;
 	} else {
-		var range = "{!frange l=" + datetime + " incl=false}" + TOTAL_SECONDS_QUERY;
+		range = "{!frange l=" + datetime + " incl=false}" + TOTAL_SECONDS_QUERY;
 	}
 	params.addParam("q", range);
 	params.addParam("sort", TOTAL_SECONDS_QUERY + " " + direction);
@@ -113,9 +116,12 @@ function updateContext(results, incremental) {
 		d2 = apollo.search(buildContextParams(datetime, 'desc'));
 	} else {
 		var direction = incremental == 'down' ? 'asc' : 'desc';
+		if(direction == 'desc') {
+			datetime -= 1;
+		}
 		d1 = apollo.search(buildContextParams(datetime, direction));
 	}
-	when = $.when(d1, d2);
+	var when = $.when(d1, d2);
 	when.done(function(rs1, rs2){
 		var results = [];
 		if(rs2 && rs2[0].response.docs) {
@@ -218,6 +224,17 @@ function scroll(direction) {
 	}
 }
 
+function scrollEvent(event) {
+	var o = event.target;
+	if(o.offsetHeight + o.scrollTop >= o.scrollHeight - 50){
+		scroll('down');
+	}
+
+	if(o.scrollTop <= 50) {
+		scroll('up');
+	}
+}
+
 $( document ).ready(function() {
 	$('#search').on('returnKey', function(event){
 		doSearch($(this).val());
@@ -237,16 +254,7 @@ $( document ).ready(function() {
 	$('#searchButton').on('click',function(event){
 		doSearch(event.toElement.parentElement.getElementsByTagName('input')[0].value);
 	});
-	$('#context').on('scroll', function(event) {
-		var o = event.target;
-		if(o.offsetHeight + o.scrollTop >= o.scrollHeight - 100){
-			scroll('down');
-		}
-
-		if(o.scrollTop == 0) {
-			scroll('up');
-		}
-	});
+	
 	var searchQueries = [
 		"\"oval room\"",
 		"\"eagle has landed\"",
@@ -255,4 +263,5 @@ $( document ).ready(function() {
 		"\"one giant leap for mankind\""
 	];
 	doSearch(searchQueries[Math.floor(Math.random() * searchQueries.length)]);
+	$('#context').on('scroll', scrollEvent);
 });

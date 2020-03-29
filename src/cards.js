@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 window.apollo = window.apollo || {};
 
 window.apollo.Card = function(doc, highlight){
@@ -50,11 +52,11 @@ window.apollo.Card = function(doc, highlight){
 
 	//create Content
 	function createContent(timestamp, message, tx, totalSeconds){
-		content = document.createElement("div");
+		var content = document.createElement("div");
 		content.className = "content";
 		var utc = new Date();
-		totalSeconds = -14552880000 + totalSeconds;
-		utc.setTime(totalSeconds);
+		totalSeconds = -14552880 + totalSeconds;
+		utc.setTime(totalSeconds * 1000);
 		content.innerHTML = "<b>Time (day, hour, minute, second): </b>" + 
 					timestamp + 
 					"<br>" + 
@@ -76,7 +78,7 @@ window.apollo.Card = function(doc, highlight){
 		card.className = "ui card";
 		$(card).append(content);
 		if(message.fullText){
-			var hiddenContent = createContent(timestamp, message.fullText, tx, totalSeconds);
+			var hiddenContent = createContent(timestamp, message.fullText, tx, totalSeconds),
 				showMoreElement = document.createElement('div');
 			hiddenContent.setAttribute("style", "display:none;");
 			showMoreElement.className = "extra content";
