@@ -58,16 +58,16 @@ window.apollo.Card = function(doc, highlight){
 		totalSeconds = -14552880 + totalSeconds;
 		utc.setTime(totalSeconds * 1000);
 		content.innerHTML = "<b>Time (day, hour, minute, second): </b>" + 
-					timestamp + 
-					"<br>" + 
-					"<b>Time (UTC): </b>" +
-					utc.toGMTString() +
-					"<a href=\"snippet.html?id=" + id +"\" target=\"_blank\">" +
-					"<i class=\"external share icon\"></i>" +
-					"</a>" +
-					"<br>" + 
-					"<b>" + tx + ": </b>" + 
-					message;
+		timestamp + 
+		"<br>" + 
+		"<b>Time (UTC): </b>" +
+		Intl.DateTimeFormat('en-GB',{dateStyle: "medium", timeStyle: "medium", timeZone: "utc"}).format(utc) +
+		"<a href=\"snippet.html?id=" + id +"\" target=\"_blank\">" +
+		"<i class=\"external share icon\"></i>" +
+		"</a>" +
+		"<br>" + 
+		"<b>" + tx + ": </b>" + 
+		message;
 		
 		return content;
 	}
