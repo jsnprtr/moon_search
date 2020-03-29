@@ -102,7 +102,7 @@ function buildContextParams(datetime, direction) {
 	return params;
 }
 
-function updateContext(results, incremental) {
+function updateContext(results, incremental, callBack) {
 	var datetime;
 	if(results instanceof Array) {
 		datetime = results[0].totalSeconds;
@@ -131,6 +131,9 @@ function updateContext(results, incremental) {
 			results = results.concat(rs1[0].response.docs);
 		}
 		updateContextCards(results, datetime, incremental);
+		if(callBack) {
+			callBack();
+		}
 	});
 }
 
@@ -206,32 +209,38 @@ function doSearch(query, sort){
 	apollo.search(buildParams(query, sort), updateUi);
 }
 
-function scroll(direction) {
+function scroll(direction, callBack) {
 	var ctx = $('#context');
 	var card;
 	if(direction == 'up'){
 		card = $('#context .ui.card:first-child')[0];
 		if(card) {
 			var datetime = card.dataset['datetime'];
-			updateContext({'totalSeconds': datetime}, direction);
+			updateContext({'totalSeconds': datetime}, direction, callBack);
 		}
 	} else {
 		card = $('#context .ui.card:last-child')[0];
 		if(card) {
 			var datetime = card.dataset['datetime'];
-			updateContext({'totalSeconds': datetime}, direction);
+			updateContext({'totalSeconds': datetime}, direction, callBack);
 		}
 	}
+}
+
+function reAttachScrollEvent() {
+	$('#context').on('scroll', scrollEvent);
 }
 
 function scrollEvent(event) {
 	var o = event.target;
 	if(o.offsetHeight + o.scrollTop >= o.scrollHeight - 50){
-		scroll('down');
+		$(o).off('scroll',scrollEvent);
+		scroll('down', reAttachScrollEvent);
 	}
 
 	if(o.scrollTop <= 50) {
-		scroll('up');
+		$(o).off('scroll',scrollEvent);
+		scroll('up', reAttachScrollEvent);
 	}
 }
 
