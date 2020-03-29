@@ -1,3 +1,6 @@
+import $ from 'jquery';
+import '../semantic/dist/semantic.css';
+
 window.apollo = window.apollo || {};
 
 window.apollo.SEARCH_HOST = "http://" + window.location.hostname + ":8983";

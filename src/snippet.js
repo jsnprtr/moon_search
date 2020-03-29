@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 $( document ).ready(function() {
 	var TOTAL_SECONDS_QUERY = "mul(sum(mul(86400, day), mul(3600, hour), mul(60, minute), second),1000)";
 

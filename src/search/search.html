@@ -18,16 +18,10 @@
 		<!-- Site Properties -->
 		<title>Apollo 11 Flight Transcripts</title>
 
-		<link rel="stylesheet" type="text/css" href="../../semantic/dist/semantic.min.css">
-    <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="../../semantic/dist/semantic.min.js"></script>
-
-		<script type="text/javascript" src="../../assets/js/cards.js"></script>
-		<script type="text/javascript" src="../../assets/js/search.js"></script>
-		<script type="text/javascript" src="../../assets/js/params.js"></script>
-		<script type="text/javascript" src="../../assets/js/main.js"></script>
-
-		<style type="text/css">
+		
+	</head>
+	<body>
+    <style type="text/css">
       body {
         padding-top: 60px;
       }
@@ -35,10 +29,11 @@
         position: absolute;
         top: 0px;
         width: 100%;
+        margin: 0;
       }
       .ui.main.container {
         height: 100%;
-        padding-top: 100px;
+        padding-top: 50px;
       }
       h5.text {
         position: absolute;
@@ -53,22 +48,20 @@
       .wide.column {
         height: 100%;
       }
-		  .ui.cards > .card {
-			  width: 400px;
-			}
-			i.external.share.icon {
-				margin-left: 0.5em;
-			}
+      .ui.cards > .card {
+        width: 400px;
+      }
+      i.external.share.icon {
+        margin-left: 0.5em;
+      }
       .ui.cards>.card.selected {
         background-color: #ffeecc; 
       }
-	  </style>
-	</head>
-	<body>
+    </style>
 		<div class="ui menu search">
 			<div class="ui container">
 				<div class="header item">
-	        <img class="logo" src="../../assets/images/rocket.svg">
+	        <img class="logo" src="../../assets/rocket.svg">
 	        Apollo Transcripts
 	      </div>
 				<div class="ui action left icon input focus">
@@ -81,6 +74,7 @@
 		</div>
 		<div class="ui main container">
 			<h5 class="text" id="resultsText">Waiting for search query...</h5>
+      <div class="ui section divider"></div>
       <h5 class="text" id="sortText"></h5>
       <div class="ui four column divided grid">
       	<div class="three wide column">
