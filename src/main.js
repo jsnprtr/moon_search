@@ -269,7 +269,10 @@ $( document ).ready(function() {
 		"\"eagle has landed\"",
 		"babe",
 		"\"magnificent desolation\"",
-		"\"one giant leap for mankind\""
+		"\"one giant leap for mankind\"",
+		"\"oatmeal\"",
+		"\"meatballs\"",
+		"\"Music Out of the Moon\""
 	];
 	doSearch(searchQueries[Math.floor(Math.random() * searchQueries.length)]);
 	$('#context').on('scroll', scrollEvent);
