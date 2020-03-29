@@ -1,33 +1,24 @@
 window.apollo = window.apollo || {};
 
 window.apollo.Params = function(){
-	var params = [];
-	
-	var addParam =  function(name, val){
-		var existingParam = getParam(name);
-		if(!existingParam){
-			params.push({"name": name, "value": val});
-		} else {
-			for(var i = 0; i < params.length; i++){
-				if(params[i].name == name){
-					params[i].value = val;
-				}
-			}
-		}
-	};
+  var params = new Map();
+  
+  var addParam =  function(name, val){
+    params.set(name, val);
+  };
 
-	var getParam = function(name){
-		for(var i = 0; i < params.length; i++){
-			if(name == params[i].name){
-				return params[i].value;
-			}
-		}
-	};
+  var getParam = function(name){
+    return params.get(name);
+  };
 
-	var buildQueryString = function(){
-		return params.map(function(elem){return elem.name + "=" + elem.value;}).join('&');
-	};
-	return {getParam: getParam,
-			addParam: addParam,
-			buildQueryString: buildQueryString};
+  var buildQueryString = function(){
+    return Array.from(params.entries()).map(
+      function(entry) {
+        return entry[0] + "=" + entry[1];
+      }).join('&');
+  };
+
+  return {getParam: getParam,
+      addParam: addParam,
+      buildQueryString: buildQueryString};
 };
