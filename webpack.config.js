@@ -70,6 +70,12 @@ module.exports = {
     new CopyWebpackPlugin([
       {
         from:'assets/images/rocket.svg', to: 'assets'
+      },
+      {
+        from: 'assets/images/jason-porter.jpg', to: 'assets'
+      },
+      {
+        from: 'assets/images/apollo-gif.gif', to: 'assets'
       }
     ])
   ]

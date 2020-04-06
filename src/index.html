@@ -27,11 +27,45 @@
       }
     </style>
   </head>
-  <body>
-    <div class="ui main container">
-      <h3 id="resultsText">Jason Porter</h3>
-      <div class="ui section divider"></div>
-      <a href="search/search.html">Apollo 11 Transcripts Search Engine</a>
+  <body class="pushable">
+    <div class="pusher">
+    
+      <div class="ui main container">
+        <div class="ui vertical stripe segment">
+          <div class="ui middle aligned stackable two column divided grid">
+            <div class="row">
+              <div class="twelve wide column">
+                <h1 class="ui header">Jason Porter</h1>
+                <p><b><i>Experienced software engineer</i></b> with a passion for writing <b><i>clean, maintainable and concise code</i></b>, exploring new technologies and sharing my existing knowledge as well as expanding my own. Looking for <b><i>interesting projects</i></b> that are both a challenge and inspire my creativity. A <b><i>fast learner</i></b> with a problem solving mindset, I am a <b><i>worthy asset</i></b> in any team.</p>
+                <div class="ui bulleted list">
+                  <div class="item">~8 years experience as a Java software developer.</div>
+                  <div class="item">Holds the Adobe Experience Manager Architect certificate as of 2018.</div>
+                  <div class="item">Experience with: Solr and Lucene, Hadoop, OSGI, Jenkins, Git</div>
+                </div>
+              </div>
+              <div class="three wide column">
+                <img class="me" src="../../assets/jason-porter.jpg">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ui vertical stripe segment">
+          <h1 class="ui header">Projects</h2>
+          <a class="ui header" href="search/search.html">Apollo 11 Transcripts Search Engine</a>
+          <div class="ui vertical stripe segment">
+            <a href="search/search.html">
+              <img class="ui medium left floated image transition visible" src="../assets/apollo-gif.gif" />
+            </a>
+            <h3 class="ui header">What is it?</h3>
+            <p>A (work in progress) search engine that contains the Apollo 11 Technical Air-to-Ground Transcript. You can search for any term and any recorded transmission that matches the search term will be displayed in the "Results" panel. You can select a result by clicking on it, and it will appear in context in the "Results in Context" panel. Here you can scroll up and down to see more of the conversation.</p>
+            <p>Refreshing the page will load a random preset search term that might be interesting.</p>
+            <h3 class="ui header">Why?</h3>
+            <p>The transcripts exist online, and can be downloaded in PDF here from <a href="https://history.nasa.gov/alsj/a11/a11trans.html">Nasa's History Division.</a> I wanted to create a more interactive experience with the transcripts. </p>
+            <h3 class="ui header">Technical Details</h3>
+            <p>The search engine itself uses Solr as the backend. The site makes direct calls to the Solr instance using JQuery. Most of the website is plain JavaScript and HTML. The CSS framework is Fomantic UI (previously Semantic UI). The Solr instance is hosted on an Amazon AWS EC2 Micro instance (as is this website). This site and the search engine can be found on <a href="https://github.com/jsnprtr/moon_search">github.</a></p>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>
