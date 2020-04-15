@@ -1,1 +1,1 @@
-import '../semantic/dist/semantic.css';
+import '../my-semantic-theme/semantic.less';
