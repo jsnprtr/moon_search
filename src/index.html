@@ -27,12 +27,12 @@
       }
     </style>
   </head>
-  <body class="pushable">
-    <div class="pusher">
+  <body class="">
+    <div class="">
     
       <div class="ui main container">
         <div class="ui vertical stripe segment">
-          <div class="ui middle aligned stackable two column divided grid">
+          <div class="ui middle aligned stackable grid">
             <div class="row">
               <div class="twelve wide column">
                 <h1 class="ui header">Jason Porter</h1>
@@ -42,28 +42,40 @@
                   <div class="item">Holds the Adobe Experience Manager Architect certificate as of 2018.</div>
                   <div class="item">Experience with: Solr and Lucene, Hadoop, OSGI, Jenkins, Git</div>
                 </div>
+                <h3 class="ui header">External links</h3>
+                <div class="ui bulleted list">
+                  <div class="item"><a href="https://linkedin.com/in/porterjason">LinkedIn</a></div>
+                  <div class="item"><a href="https://github.com/jsnprtr">GitHub</a></div>
+                </div>
               </div>
-              <div class="three wide column">
-                <img class="me" src="../../assets/jason-porter.jpg">
+              <div class="four wide column computer only">
+                <img class="ui fluid rounded image top" src="../../assets/jason-porter.jpg">
               </div>
             </div>
           </div>
         </div>
         <div class="ui vertical stripe segment">
-          <h1 class="ui header">Projects</h2>
-          <a class="ui header" href="search/search.html">Apollo 11 Transcripts Search Engine</a>
-          <div class="ui vertical stripe segment">
-            <a href="search/search.html">
-              <img class="ui medium left floated image transition visible" src="../assets/apollo-gif.gif" />
-            </a>
-            <h3 class="ui header">What is it?</h3>
-            <p>A (work in progress) search engine that contains the Apollo 11 Technical Air-to-Ground Transcript. You can search for any term and any recorded transmission that matches the search term will be displayed in the "Results" panel. You can select a result by clicking on it, and it will appear in context in the "Results in Context" panel. Here you can scroll up and down to see more of the conversation.</p>
-            <p>Refreshing the page will load a random preset search term that might be interesting.</p>
-            <h3 class="ui header">Why?</h3>
-            <p>The transcripts exist online, and can be downloaded in PDF here from <a href="https://history.nasa.gov/alsj/a11/a11trans.html">Nasa's History Division.</a> I wanted to create a more interactive experience with the transcripts. </p>
-            <h3 class="ui header">Technical Details</h3>
-            <p>The search engine itself uses Solr as the backend. The site makes direct calls to the Solr instance using JQuery. Most of the website is plain JavaScript and HTML. The CSS framework is Fomantic UI (previously Semantic UI). The Solr instance is hosted on an Amazon AWS EC2 Micro instance (as is this website). This site and the search engine can be found on <a href="https://github.com/jsnprtr/moon_search">github.</a></p>
-          </div>
+          <h1 class="ui huge header">Projects</h1>
+          <a class="ui large header" href="search/search.html">Apollo 11 Transcripts Search Engine</a>
+          <a href="search/search.html">
+            <video class="ui medium right floated image transition visible" autoplay loop muted playsinline>  
+              <source src="assets/apollo-search.webm" type="video/webm">
+              <source src="assets/apollo-search.mp4" type="video/mp4">
+            </video>
+          </a>
+          <h3 class="ui medium header">What is it?</h3>
+          <p>A (work in progress) search engine that contains the Apollo 11 Technical Air-to-Ground Transcript. You can search for any term and any recorded transmission that matches the search term will be displayed in the "Results" panel. You can select a result by clicking on it, and it will appear in context in the "Results in Context" panel. Here you can scroll up and down to see more of the conversation.</p>
+          <p>Refreshing the page will load a random preset search term that might be interesting.</p>
+          <h3 class="ui medium header">Why?</h3>
+          <p>The transcripts exist online, and can be downloaded in PDF here from <a href="https://history.nasa.gov/alsj/a11/a11trans.html">Nasa's History Division.</a> I wanted to create a more interactive experience with the transcripts. </p>
+          <h3 class="ui medium header">Technical Details</h3>
+          <p>The search engine itself uses Solr as the backend. The site makes direct calls to the Solr instance using JQuery. Most of the website is plain JavaScript and HTML. The CSS framework is Fomantic UI (previously Semantic UI). The Solr instance is hosted on an Amazon AWS EC2 Micro instance (as is this website). This site and the search engine can be found on <a href="https://github.com/jsnprtr/moon_search">github.</a></p>
+        </div>
+        <div class="ui vertical stripe segment">
+          <h3>Certficates:</h3>
+          <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="87f071c6-6615-432b-9ef6-546685507338" data-share-badge-host="https://www.youracclaim.com"></div>
+          <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="a53ea006-e872-4c75-924f-d7a99c8d028f" data-share-badge-host="https://www.youracclaim.com"></div>
+          <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="9c881331-372c-48fa-a993-1f19fc95abe3" data-share-badge-host="https://www.youracclaim.com"></div><script type="text/javascript" async src="//cdn.youracclaim.com/assets/utilities/embed.js"></script>
         </div>
       </div>
     </div>

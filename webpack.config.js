@@ -2,6 +2,8 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -22,36 +24,55 @@ module.exports = {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
+  resolve: {
+    alias: {
+      '../../theme.config$': path.join(__dirname, 'my-semantic-theme/theme.config'),
+      "../semantic-ui/site": path.join(__dirname, "/my-semantic-theme/site")
+    }
+  },
   optimization: {
     splitChunks: {
       chunks: 'all'
-    }
+    },
+    minimizer: [new OptimizeCSSAssetsPlugin({})],
   },
   module: {
     rules: [
       {
-        test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader'
-        ]
+        test: /\.less$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader", "less-loader"],
       },
 
       // Semantic UI fonts and images
-      {test:/\.svg$/,loader:'url-loader',query:{mimetype:'image/svg+xml',name:'./public/css/semantic/themes/default/assets/fonts/icons.svg'}},
-
-      {test:/\.png$/,loader:'url-loader',query:{mimetype:'image/png',name:'./public/css/semantic/themes/default/assets/images/flags.png'}},
-   
-      {test:/\.woff$/,loader:'url-loader',query:{mimetype:'application/font-woff',name:'./public/css/semantic/themes/default/assets/fonts/icons.woff'}},
-              
-      {test:/\.woff2$/,loader:'url-loader',query:{mimetype:'application/font-woff2',name:'./public/css/semantic/themes/default/assets/fonts/icons.woff2'}},
-              
-      {test:/\.[ot]tf$/,loader:'url-loader',query:{mimetype:'application/octet-stream',name:'./public/css/semantic/themes/default/assets/fonts/icons.ttf'}},   
-
-      {test:/\.eot$/,loader:'url-loader',query:{mimetype:'application/vnd.ms-fontobject',name:'./public/css/semantic/themes/default/assets/fonts/icons.eot'}}
+      {
+        test: /\.jpe?g$|\.gif$|\.ico$|\.png$|\.svg$/,
+        use: 'file-loader?name=[name].[ext]?[hash]'
+      },
+      // the following 3 rules handle font extraction
+      {
+        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'url-loader?limit=10000&mimetype=application/font-woff'
+      },
+      
+      {
+        test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'file-loader'
+      },
+      {
+        test: /\.otf(\?.*)?$/,
+        use: 'file-loader?name=/fonts/[name].  [ext]&mimetype=application/font-otf'
+      }
     ]
   },
   plugins: [
+    new MiniCssExtractPlugin(),
+    new OptimizeCSSAssetsPlugin({
+      cssProcessor: require('cssnano'),
+      cssProcessorPluginOptions: {
+        preset: ['default', { discardComments: { removeAll: true } }],
+      },
+      canPrint: true
+    }),
     new HtmlWebpackPlugin({
       chunks: ['index'],
       template: './src/index.html',
@@ -75,7 +96,10 @@ module.exports = {
         from: 'assets/images/jason-porter.jpg', to: 'assets'
       },
       {
-        from: 'assets/images/apollo-gif.gif', to: 'assets'
+        from: 'assets/videos/apollo-search.mp4', to: 'assets'
+      },
+      {
+        from: 'assets/videos/apollo-search.webm', to: 'assets'
       }
     ])
   ]

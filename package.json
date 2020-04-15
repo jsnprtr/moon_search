@@ -24,16 +24,20 @@
     "url": "https://github.com/jsnprtr/moon_search/issues"
   },
   "homepage": "https://github.com/jsnprtr/moon_search#readme",
-  "dependencies": {
-    "fomantic-ui": "^2.8.4"
-  },
+  "dependencies": {},
   "devDependencies": {
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^3.4.2",
+    "cssnano": "^4.1.10",
     "file-loader": "^6.0.0",
+    "fomantic-ui-less": "^2.8.4",
     "html-webpack-plugin": "^4.0.2",
     "jest": "^25.2.3",
+    "less": "^3.11.1",
+    "less-loader": "^5.0.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
     "style-loader": "^1.1.3",
     "url-loader": "^4.0.0",
     "webpack": "^4.42.1",
