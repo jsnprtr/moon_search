@@ -1,7 +1,7 @@
-var params = require('../params.js');
+var param = require('../params.js');
 
 test('Creates a params object', () => {
-  var params = new window.apollo.Params();
+  var params = new param.Params();
 
   params.addParam('a', 'x');
 
@@ -9,7 +9,7 @@ test('Creates a params object', () => {
 });
 
 test('Can overwrite existing param', () => {
-  var params = new window.apollo.Params();
+  var params = new param.Params();
 
   params.addParam('a', 'x');
   params.addParam('a', 'y');
@@ -18,15 +18,24 @@ test('Can overwrite existing param', () => {
 });
 
 test('Builds query string', () => {
-  var params = new window.apollo.Params();
+  var params = new param.Params();
 
   params.addParam('a', 'x');
 
   expect(params.buildQueryString()).toEqual('a=x');
 });
 
+test('Mulitple queries adds \'&\' to query string', () => {
+  var params = new param.Params();
+
+  params.addParam('a', 'x');
+  params.addParam('b', 'y');
+
+  expect(params.buildQueryString()).toEqual('a=x&b=y');
+});
+
 test('Empty params returns nothing', () => {
-  var params = new window.apollo.Params();
+  var params = new param.Params();
 
   expect(params.buildQueryString()).toEqual('');
 });

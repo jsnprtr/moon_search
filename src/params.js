@@ -22,3 +22,5 @@ window.apollo.Params = function(){
       addParam: addParam,
       buildQueryString: buildQueryString};
 };
+
+exports.Params = window.apollo.Params;
