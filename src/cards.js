@@ -1,4 +1,4 @@
-import $ from 'jquery';
+var $ = require('jquery');
 
 window.apollo = window.apollo || {};
 
@@ -17,8 +17,10 @@ window.apollo.Card = function(doc, highlight){
 
 	// Get message with ellipses or not
 	function getMessage(message, highlight){
-		var retMessage = {text: "",
-		fullText: undefined};
+		var retMessage = {
+			text: "",
+			fullText: undefined
+		};
 		retMessage.text = highlight || message;
 		if(highlight){
 			var shortText = highlight.replace(/<\/?em>/g, "");
@@ -99,3 +101,5 @@ window.apollo.Card = function(doc, highlight){
 		addClass: addClass
 	};
 };
+
+exports.Card = window.apollo.Card;
