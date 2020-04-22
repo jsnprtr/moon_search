@@ -39,6 +39,10 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader"]
+      },
+      {
         test: /\.less$/,
         use: [MiniCssExtractPlugin.loader, "css-loader", "less-loader"],
       },
@@ -86,6 +90,11 @@ module.exports = {
       chunks: ['params', 'search', 'cards', 'snippet'],
       template: './src/search/snippet.html',
       filename: 'search/snippet.html'
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['index'],
+      template: './src/privacypolicy.html',
+      filename: 'privacypolicy.html'
     }),
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
