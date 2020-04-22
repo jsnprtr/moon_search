@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import './cookieconsent.js';
 
 // Add event handler
 var TOTAL_SECONDS_QUERY = "sum(mul(86400, day), mul(3600, hour), mul(60, minute), second)";
