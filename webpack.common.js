@@ -4,9 +4,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const TerserJSPlugin = require('terser-webpack-plugin');
 
 module.exports = {
-  mode: 'development',
   entry: {
     'index': './src/index.js',
     'main': './src/main.js',
@@ -15,10 +15,6 @@ module.exports = {
     'cards': './src/cards.js',
     'snippet': './src/snippet.js',
     'shared': 'jquery'
-  },
-  devtool: 'inline-source-map',
-  devServer: {
-    contentBase: './dist',
   },
   output: {
     filename: '[name].bundle.js',
@@ -34,7 +30,9 @@ module.exports = {
     splitChunks: {
       chunks: 'all'
     },
-    minimizer: [new OptimizeCSSAssetsPlugin({})],
+    minimizer: [
+      new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})
+    ],
   },
   module: {
     rules: [
