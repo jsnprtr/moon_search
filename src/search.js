@@ -3,7 +3,7 @@ import '../my-semantic-theme/semantic.less';
 
 window.apollo = window.apollo || {};
 
-window.apollo.SEARCH_HOST = "http://" + window.location.hostname + ":8983";
+window.apollo.SEARCH_HOST = __SOLRPROTOCOL__ + "://" + window.location.hostname + ":" + __SOLRPORT__;
 window.apollo.COLLECTION = "transcripts";
 
 window.apollo.buildQuery = function(params){
