@@ -179,15 +179,28 @@ function updateFacets(facets){
 
 }
 
+/*
+* sends a 'search_made' event to GA with the query as the event label
+*/
+function trackRequest(query) {
+  gtag('event', 'search_made', {
+	  'event_category': 'Search',
+	  'event_label': query
+	});
+}
+
 // Update UI
-function updateUi(response, params){
-		var resultsText = getResultsText(response.response.numFound, params.getParam("q"));
-		$('#resultsText').text(resultsText);
-		$('#sortText').text(getSortText(params.getParam("sort")));
-		$('body').attr('query', params.getParam('q'));
-		updateCards(response.response.docs, response.highlighting);
-		updateFacets(response.facet_counts);
-		updateContext(response.response.docs);
+function updateUi(response, params, customParams){
+	var resultsText = getResultsText(response.response.numFound, params.getParam("q"));
+	if(customParams.trackRequest) {
+		trackRequest(params.getParam("q"));
+	}
+	$('#resultsText').text(resultsText);
+	$('#sortText').text(getSortText(params.getParam("sort")));
+	$('body').attr('query', params.getParam('q'));
+	updateCards(response.response.docs, response.highlighting);
+	updateFacets(response.facet_counts);
+	updateContext(response.response.docs);
 }
 
 function buildParams(query, sort){
@@ -206,8 +219,8 @@ function buildParams(query, sort){
 	return params;
 }
 
-function doSearch(query, sort){
-	apollo.search(buildParams(query, sort), updateUi);
+function doSearch(query, sort, track){
+	apollo.search(buildParams(query, sort), updateUi, {trackRequest: track});
 }
 
 function scroll(direction, callBack) {
@@ -247,7 +260,7 @@ function scrollEvent(event) {
 
 $( document ).ready(function() {
 	$('#search').on('returnKey', function(event){
-		doSearch($(this).val());
+		doSearch($(this).val(), undefined, true);
 	});
 
 	$('#sort').on('click', function(event) {
@@ -262,7 +275,7 @@ $( document ).ready(function() {
 		}
 	});
 	$('#searchButton').on('click',function(event){
-		doSearch(event.toElement.parentElement.getElementsByTagName('input')[0].value);
+		doSearch(event.toElement.parentElement.getElementsByTagName('input')[0].value, undefined, true);
 	});
 	
 	var searchQueries = [

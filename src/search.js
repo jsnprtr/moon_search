@@ -10,14 +10,10 @@ window.apollo.buildQuery = function(params){
 	return this.SEARCH_HOST + "/solr/" + this.COLLECTION + "/select" + "?" + params.buildQueryString();
 };
 
-window.apollo.search = function(params, callback){
-        gtag('event', 'search_made', {
-          'event_category': 'Search',
-          'event_label': params.getParam('q')
-        });
+window.apollo.search = function(params, callback, customParams){
 	return $.get(this.buildQuery(params), function(response){
 		if(typeof callback == 'function' ){
-			callback(response, params);
+			callback(response, params, customParams);
 		}
 	});
 };
