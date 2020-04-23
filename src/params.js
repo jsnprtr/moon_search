@@ -1,6 +1,4 @@
-window.apollo = window.apollo || {};
-
-window.apollo.Params = function(){
+var Params = function(){
   var params = new Map();
   
   var addParam =  function(name, val){
@@ -23,4 +21,4 @@ window.apollo.Params = function(){
       buildQueryString: buildQueryString};
 };
 
-exports.Params = window.apollo.Params;
+exports.Params = Params;

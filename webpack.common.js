@@ -10,7 +10,7 @@ module.exports = {
   entry: {
     'index': './src/index.js',
     'main': './src/main.js',
-    'search': './src/search.js',
+    'search': './src/searchpage.js',
     'params': './src/params.js',
     'cards': './src/cards.js',
     'snippet': './src/snippet.js',

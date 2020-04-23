@@ -1,6 +1,8 @@
 var $ = require('jquery');
 var cards = require('./cards.js');
 var param = require('./params.js');
+var search = require('./search.js');
+var searchClient;
 
 var TOTAL_SECONDS_QUERY = "mul(sum(mul(86400, day), mul(3600, hour), mul(60, minute), second),1000)";
 
@@ -13,10 +15,11 @@ function updateUi(response){
 }
 
 function getResult(id){
+  searchClient =  searchClient || new search.Client();
   var params = new param.Params();
   params.addParam("q", "id:" + id);
   params.addParam("fl", "*, totalSeconds:" + TOTAL_SECONDS_QUERY);
-  apollo.search(params, updateUi);
+  searchClient.search(params, updateUi);
 }
 
 document.addEventListener("DOMContentLoaded", function(event) { //your code
