@@ -1,21 +1,23 @@
+// These must be defined before snippet is loaded
+global.__SOLRPROTOCOL__ = "test";
+global.__SOLRPORT__ = '0000';
 const snippet = require('../snippet.js');
 
 jest.mock('../cards.js');
 jest.mock('../params.js');
+jest.mock('../search.js');
 const mockCreateCard = jest.fn();
 mockCreateCard.mockReturnValue('appended');
 const mockAddParam = jest.fn();
 const cards = require('../cards.js');
 const param = require('../params.js');
+const search = require('../search.js');
+const mockSearch = jest.fn();
 
 const $ = require('jquery');
 
 const mockParams = {
   addParam: mockAddParam
-};
-
-global.apollo = {
-  search: jest.fn()
 };
 
 beforeEach(() => {
@@ -29,7 +31,14 @@ beforeEach(() => {
   param.Params.mockImplementation(() => {
     return mockParams;
   });
-  apollo.search.mockClear();
+
+  search.Client.mockClear();
+  search.Client.mockImplementation(() => {
+    return {
+      search: mockSearch
+    };
+  });
+  mockSearch.mockClear();
 });
 
 test('Should create a card with the first document from the response object', () => {
@@ -63,8 +72,8 @@ test('Should call search with params object using id as query', () => {
   snippet.snippet.getResult(id);
 
   expect(mockAddParam).toHaveBeenCalledTimes(2);
-  expect(apollo.search).toHaveBeenCalledTimes(1);
-  expect(apollo.search).toHaveBeenCalledWith(mockParams, snippet.snippet.updateUi);
+  expect(mockSearch).toHaveBeenCalledTimes(1);
+  expect(mockSearch).toHaveBeenCalledWith(mockParams, snippet.snippet.updateUi);
 
 
 });
@@ -81,7 +90,7 @@ test('Should call getResult on document ready and make a search with updateUi fu
     cancelable: true
   }));
 
-  expect(apollo.search).toHaveBeenCalledTimes(1);
-  expect(apollo.search).toHaveBeenCalledWith(mockParams, snippet.snippet.updateUi);
+  expect(mockSearch).toHaveBeenCalledTimes(1);
+  expect(mockSearch).toHaveBeenCalledWith(mockParams, snippet.snippet.updateUi);
 
 });

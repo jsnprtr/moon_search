@@ -1,9 +1,7 @@
 var $ = require('jquery');
 var Message = require('./messageutils.js').Message;
 
-window.apollo = window.apollo || {};
-
-window.apollo.Card = function(doc, highlight){
+var Card = function(doc, highlight){
 	var timestamp = doc.timestamp,
 		totalSeconds = doc.totalSeconds,
  		message = new Message(doc.message, highlight).getMessage(),
@@ -97,4 +95,4 @@ window.apollo.Card = function(doc, highlight){
 	};
 };
 
-exports.Card = window.apollo.Card;
+exports.Card = Card;

@@ -1,7 +1,10 @@
-import $ from 'jquery';
-import './cookieconsent.js';
+var $ = require('jquery');
+require('./cookieconsent.js');
+var Client = require('./search.js').Client;
+var Card = require('./cards.js').Card;
+var Params = require('./params.js').Params;
 
-// Add event handler
+var searchClient = new Client();
 var TOTAL_SECONDS_QUERY = "sum(mul(86400, day), mul(3600, hour), mul(60, minute), second)";
 var sortMap = {
 	"time": {
@@ -53,7 +56,7 @@ function updateCards(results, highlight){
 		if(highlightForResult && highlightForResult.message && highlightForResult.message.length > 0) {
 			highlightMessage = highlightForResult.message[0];
 		}
-		var card = new apollo.Card(results[i],
+		var card = new Card(results[i],
 			highlightMessage);
 		if(i == 0){
 			card.addClass('selected');
@@ -69,7 +72,7 @@ function updateContextCards(results, totalSeconds, incremental) {
 	}
 	var selected = results.length - 6;
 	for(var i = 0; i < results.length; i++) {
-		var card = new apollo.Card(results[i]);
+		var card = new Card(results[i]);
 		if(results[i].totalSeconds == totalSeconds && !incremental) {
 			card.addClass('selected');
 		}
@@ -87,7 +90,7 @@ function updateContextCards(results, totalSeconds, incremental) {
 }
 
 function buildContextParams(datetime, direction) {
-	var params = new apollo.Params();
+	var params = new Params();
 	var range;
 	if(direction == "desc") {
 		range = "{!frange u=" + datetime + "}" + TOTAL_SECONDS_QUERY;
@@ -113,14 +116,14 @@ function updateContext(results, incremental, callBack) {
 	var responses = {};
 	var d1, d2;
 	if(!incremental) {
-		d1 = apollo.search(buildContextParams(datetime, 'asc'));
-		d2 = apollo.search(buildContextParams(datetime, 'desc'));
+		d1 = searchClient.search(buildContextParams(datetime, 'asc'));
+		d2 = searchClient.search(buildContextParams(datetime, 'desc'));
 	} else {
 		var direction = incremental == 'down' ? 'asc' : 'desc';
 		if(direction == 'desc') {
 			datetime -= 1;
 		}
-		d1 = apollo.search(buildContextParams(datetime, direction));
+		d1 = searchClient.search(buildContextParams(datetime, direction));
 	}
 	var when = $.when(d1, d2);
 	when.done(function(rs1, rs2){
@@ -204,7 +207,7 @@ function updateUi(response, params, customParams){
 }
 
 function buildParams(query, sort){
-	var params = new apollo.Params();
+	var params = new Params();
 	params.addParam("q", query);
 	params.addParam("q.op", "and");
 	params.addParam("hl", "true");
@@ -220,7 +223,7 @@ function buildParams(query, sort){
 }
 
 function doSearch(query, sort, track){
-	apollo.search(buildParams(query, sort), updateUi, {trackRequest: track});
+	searchClient.search(buildParams(query, sort), updateUi, {trackRequest: track});
 }
 
 function scroll(direction, callBack) {
