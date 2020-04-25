@@ -142,3 +142,21 @@ test(`That the 'show more' button works as it should on long messages`, () => {
 
 
 });
+
+test(`It should create a card object with no link text`, () => {
+  
+  const mockDoc = {
+    timestamp: '00 01 02 03',
+    totalSeconds: 1445412480 + 14552880,
+    transmitter: 'Rick',
+    id: 'someid',
+    message: 'If I die in a cage I lose a bet'
+  };
+  
+  const card = new cards.Card(mockDoc, 'If I die in a <em>cage</em> I lose a bet');
+  card.setNoLink();
+  
+  const cardHtml = card.createCard();
+
+  expect(cardHtml.outerHTML).toMatch("<div class=\"ui card\" data-datetime=\"1459965360\"><div class=\"content\"><b>Time (day, hour, minute, second): </b>00 01 02 03<br><b>Time (UTC): </b>Oct 21, 2015, 7:28:00 AM<br><b>Rick: </b>If I die in a <em>cage</em> I lose a bet</div></div>");
+});

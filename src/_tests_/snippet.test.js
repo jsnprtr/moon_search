@@ -24,6 +24,7 @@ beforeEach(() => {
   cards.Card.mockClear();
   cards.Card.mockImplementation(() => {
     return {
+      setNoLink: jest.fn(),
       createCard: mockCreateCard
     };
   });

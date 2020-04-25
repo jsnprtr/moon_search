@@ -10,6 +10,7 @@ function updateUi(response){
   var cardHolder = $("#cardHolder"),
     document = response.response.docs[0],
     card = new cards.Card(document, null);
+  card.setNoLink();
   cardHolder.empty();
   cardHolder.append(card.createCard());
 }

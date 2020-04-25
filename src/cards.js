@@ -6,7 +6,8 @@ var Card = function(doc, highlight){
 		totalSeconds = doc.totalSeconds,
  		message = new Message(doc.message, highlight).getMessage(),
 		tx = doc.transmitter,
-		id = doc.id;
+		id = doc.id,
+		addLink = true;
 
 	function addClass(className) {
 		this.classNames = this.classNames || [];
@@ -38,6 +39,16 @@ var Card = function(doc, highlight){
 			}).format(utc);
 	}
 
+	function getLinkHTML() {
+		if(addLink) {
+			return "<a href=\"snippet.html?id=" + id +"\" target=\"_blank\">" +
+			"<i class=\"external share icon\"></i>" +
+			"</a>";
+		} else {
+			return "";
+		}
+	}
+
 	//create Content
 	function createContent(text){
 		var content = document.createElement("div");
@@ -47,9 +58,7 @@ var Card = function(doc, highlight){
 		"<br>" + 
 		"<b>Time (UTC): </b>" +
 		getDateFromSeconds() +
-		"<a href=\"snippet.html?id=" + id +"\" target=\"_blank\">" +
-		"<i class=\"external share icon\"></i>" +
-		"</a>" +
+		getLinkHTML() +
 		"<br>" + 
 		"<b>" + tx + ": </b>" + 
 		text;
@@ -89,9 +98,15 @@ var Card = function(doc, highlight){
 		card.dataset.datetime = totalSeconds;
 		return card;
 	}
+
+	function setNoLink() {
+		addLink = false;
+	}
+
 	return {
 		createCard: createCard,
-		addClass: addClass
+		addClass: addClass,
+		setNoLink: setNoLink
 	};
 };
 
