@@ -41,6 +41,7 @@
       }
       .ui.column {
         height: 100%;
+        padding-bottom: 3em;
       }
       .ui.cards {
         height: 100%;
@@ -57,6 +58,12 @@
       .ui.cards>.card.selected {
         background-color: #ffeecc; 
       }
+      .ui.section.divider {
+        margin-top: 0px;
+      }
+      .ui.checkbox {
+        display: block;
+      }
     </style>
 		<div class="ui menu search">
 			<div class="ui container">
@@ -72,103 +79,109 @@
 			</div>
 			
 		</div>
-		<div class="ui main container">
-			<h5 class="text" id="resultsText">Waiting for search query...</h5>
-      <div class="ui section divider"></div>
-      <h5 class="text" id="sortText"></h5>
-      <div class="ui four column divided grid">
-      	<div class="three wide column">
-          <div class="ui compact menu">
-            <div class="ui simple dropdown item" tabindex="0">
-              Sort
-              <i class="dropdown icon"></i>
-              <div id="sort" class="menu" tabindex="-1">
-                <div value="sum(mul(86400, day), mul(3600, hour), mul(60, minute), second) desc" class="item">Time desc</div>
-                <div value="sum(mul(86400, day), mul(3600, hour), mul(60, minute), second) asc" class="item">Time asc</div>
-                <div class="divider"></div>
-                <div value="score desc"class="item">Relevance desc</div>
-                <div value="score asc" class="item">Relevance asc</div>
+		<div class="ui main container" style="padding-bottom: 1.2em">
+      <div style="height: 100%">
+  			<h5 class="text" id="resultsText">Waiting for search query...</h5>
+        <h5 class="text" id="sortText"></h5>
+        <div class="ui section divider"></div>
+        <div class="ui four column divided grid">
+        	<div class="three wide column">
+            <div class="ui compact menu">
+              <div class="ui simple dropdown item" tabindex="0">
+                Sort
+                <i class="dropdown icon"></i>
+                <div id="sort" class="menu" tabindex="-1">
+                  <div value="sum(mul(86400, day), mul(3600, hour), mul(60, minute), second) desc" class="item">Time desc</div>
+                  <div value="sum(mul(86400, day), mul(3600, hour), mul(60, minute), second) asc" class="item">Time asc</div>
+                  <div class="divider"></div>
+                  <div value="score desc"class="item">Relevance desc</div>
+                  <div value="score asc" class="item">Relevance asc</div>
+                </div>
               </div>
             </div>
-          </div>
-				  <div class="ui divider"></div>
-				  <div class="ui text">
-				  	<h5>Tx:</h5>
-				  </div>
-				  <div id="facets">
-					  <div class="ui checkbox">
-						  <input type="checkbox" name="example">
-						  <label>Buzz</label>
-						</div>
-						<br>
-						<div class="ui checkbox">
-						  <input type="checkbox" name="example">
-						  <label>Neil</label>
-						</div>
-						<br>
-						<div class="ui checkbox">
-						  <input type="checkbox" name="example">
-						  <label>Mike Collins</label>
-						</div>
-					</div>
-      	</div>
-    		<div class="six wide column">
-    			<h3>
-    				Search Results:
-    			</h3>
-    			<div id="cardHolder" class="ui cards" style="overflow-y: scroll">
-    				<div class="ui card">
-    					<div class="content">
-    						<b>Time:</b>
-    						00 00 01 27
+  				  <div class="ui divider"></div>
+  				  <div class="ui text">
+  				  	<h5>Tx:</h5>
+  				  </div>
+            <div style="overflow-y: scroll; height: 90%">
+    				  <div id="facets">
+    					  <div class="ui checkbox">
+    						  <input type="checkbox" name="example">
+    						  <label>Buzz</label>
+    						</div>
     						<br>
-    						<b>CDR:</b>
-    						Roger. We got a roll program.
-    					</div>
-    				</div>
-    				<div class="ui card">
-    					<div class="content">
-    						<b>Time:</b>
-    						00 00 00 15
+    						<div class="ui checkbox">
+    						  <input type="checkbox" name="example">
+    						  <label>Neil</label>
+    						</div>
     						<br>
-    						<b>CMP:</b>
-    						Roger. Roll.
+    						<div class="ui checkbox">
+    						  <input type="checkbox" name="example">
+    						  <label>Mike Collins</label>
+    						</div>
     					</div>
-    				</div>
+            </div>
+        	</div>
+      		<div class="six wide column">
+      			<h3>
+      				Search Results:
+      			</h3>
+      			<div id="cardHolder" class="ui cards" style="overflow-y: scroll">
+      				<div class="ui card">
+      					<div class="content">
+      						<b>Time:</b>
+      						00 00 01 27
+      						<br>
+      						<b>CDR:</b>
+      						Roger. We got a roll program.
+      					</div>
+      				</div>
+      				<div class="ui card">
+      					<div class="content">
+      						<b>Time:</b>
+      						00 00 00 15
+      						<br>
+      						<b>CMP:</b>
+      						Roger. Roll.
+      					</div>
+      				</div>
+      			</div>
+      		</div>
+    			<div class="six wide column">
+    				<h3>
+      				Results in context:
+      			</h3>
+      			<div id="context" class="ui cards" style="overflow-y: scroll">
+      				<a href="#">Click for earlier results...</a>
+      				<div class="ui card">
+      					<div class="content">
+      						<b>Time:</b>
+      						00 00 01 27
+      						<br>
+      						<b>CDR:</b>
+      						Roger. We got a roll program.
+      					</div>
+      				</div>
+      				<div class="ui card">
+      					<div class="content">
+      						<b>Time:</b>
+      						00 00 00 15
+      						<br>
+      						<b>CMP:</b>
+      						Roger. Roll.
+      					</div>
+      				</div>
+      			</div>
     			</div>
-    		</div>
-  			<div class="six wide column">
-  				<h3>
-    				Results in context:
-    			</h3>
-    			<div id="context" class="ui cards" style="overflow-y: scroll">
-    				<a href="#">Click for earlier results...</a>
-    				<div class="ui card">
-    					<div class="content">
-    						<b>Time:</b>
-    						00 00 01 27
-    						<br>
-    						<b>CDR:</b>
-    						Roger. We got a roll program.
-    					</div>
-    				</div>
-    				<div class="ui card">
-    					<div class="content">
-    						<b>Time:</b>
-    						00 00 00 15
-    						<br>
-    						<b>CMP:</b>
-    						Roger. Roll.
-    					</div>
-    				</div>
+    			<div class="one wide column">
+    				<h3>
+              Timeline
+            </h3>
+            <div>
+            </div>
     			</div>
-  			</div>
-  			<div class="one wide column">
-  				<h3>
-            Timeline
-          </h3>
-  			</div>
-      </div>
-		</div>
+        </div>
+		  </div>
+    </div>
 	</body>
 </html>
