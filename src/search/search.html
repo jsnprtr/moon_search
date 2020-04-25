@@ -55,14 +55,32 @@
       i.external.share.icon {
         margin-left: 0.5em;
       }
-      .ui.cards>.card.selected {
-        background-color: #ffeecc; 
-      }
       .ui.section.divider {
         margin-top: 0px;
       }
       .ui.checkbox {
         display: block;
+      }
+      /*Earth:*/
+      #context > .ui.card.PRESIDENT,#context > .ui.card.CC,#context > .ui.card.CT,#context > .ui.card.HORNET{
+        background: aliceblue;
+        width: 90%;
+      }
+      /*Space:*/
+      #context > .ui.card.CDR,#context > .ui.card.CMP,#context > .ui.card.LMP {
+        background: #fffce6;
+        width: 90%;
+        float: right;
+        margin-left: auto;
+      }
+      /*Other:*/
+      #context > .ui.card.MUS,#context > .ui.card.SC,#context > .ui.card.SWIM,#context > .ui.card.UNK,#context > .ui.card.MS,#context > .ui.card.MSFN {
+        background: lemonchiffon;
+        width: 90%;
+      }
+      #context.ui.cards > .ui.card.selected div, #cardHolder > .ui.card.selected {
+        box-shadow: 0 4px 3px 0 #d4d4d5, 0 0 0 3px #d4d4d5;
+        background-color: #ffeecc; 
       }
     </style>
 		<div class="ui menu search">

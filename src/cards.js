@@ -83,7 +83,7 @@ var Card = function(doc, highlight){
 	function createCard(clickEvent){
 		var card = document.createElement("div"),
 			content = createContent(message.text);
-		card.className = "ui card";
+		card.className = "ui card " + tx;
 		$(card).append(content);
 		if(message.fullText){
 			var showMoreElement = createShowMoreElement(),
