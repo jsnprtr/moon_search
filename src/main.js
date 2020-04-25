@@ -4,7 +4,7 @@ var Client = require('./search.js').Client;
 var Card = require('./cards.js').Card;
 var Params = require('./params.js').Params;
 
-var searchClient = new Client();
+var searchClient;
 var TOTAL_SECONDS_QUERY = "sum(mul(86400, day), mul(3600, hour), mul(60, minute), second)";
 var sortMap = {
 	"time": {
@@ -17,9 +17,6 @@ var sortMap = {
 	}
 };
 
-$(document).bind('ajaxSend', function(event){
-  //console.log('ajax sent');
-});
 // Get resultstext
 function getResultsText(numFound, input){
 	var results = "results";
@@ -42,7 +39,7 @@ function clickEvent(event) {
 	});
 	var card = $(event.target).closest('.card')[0];
 	card.classList.add('selected');
-	var datetime = card.dataset['datetime'];
+	var datetime = card.dataset.datetime;
 	updateContext({'totalSeconds': Number.parseFloat(datetime)});
 }
 
@@ -83,7 +80,7 @@ function updateContextCards(results, totalSeconds, incremental) {
 		}
 	}
 	ctx.children().each(function(index, child){
-		if(child.dataset.datetime == totalSeconds){
+		if(child.dataset.datetime == totalSeconds && !incremental){
 			child.scrollIntoView();
 		}
 	});
@@ -195,7 +192,7 @@ function trackRequest(query) {
 // Update UI
 function updateUi(response, params, customParams){
 	var resultsText = getResultsText(response.response.numFound, params.getParam("q"));
-	if(customParams.trackRequest) {
+	if(customParams && customParams.trackRequest) {
 		trackRequest(params.getParam("q"));
 	}
 	$('#resultsText').text(resultsText);
@@ -223,24 +220,23 @@ function buildParams(query, sort){
 }
 
 function doSearch(query, sort, track){
+	if(!searchClient) {
+		searchClient = new Client();
+	}
 	searchClient.search(buildParams(query, sort), updateUi, {trackRequest: track});
 }
 
-function scroll(direction, callBack) {
-	var ctx = $('#context');
-	var card;
+function scroll(direction) {
+	var selector;
 	if(direction == 'up'){
-		card = $('#context .ui.card:first-child')[0];
-		if(card) {
-			var datetime = card.dataset['datetime'];
-			updateContext({'totalSeconds': datetime}, direction, callBack);
-		}
+		selector = 'first';
 	} else {
-		card = $('#context .ui.card:last-child')[0];
-		if(card) {
-			var datetime = card.dataset['datetime'];
-			updateContext({'totalSeconds': datetime}, direction, callBack);
-		}
+		selector = 'last';
+	}
+	var card = $('#context .ui.card:' + selector + '-child')[0];
+	if(card) {
+		var datetime = card.dataset.datetime;
+		updateContext({'totalSeconds': datetime}, direction, reAttachScrollEvent);
 	}
 }
 
@@ -250,18 +246,16 @@ function reAttachScrollEvent() {
 
 function scrollEvent(event) {
 	var o = event.target;
-	if(o.offsetHeight + o.scrollTop >= o.scrollHeight - 50){
-		$(o).off('scroll',scrollEvent);
-		scroll('down', reAttachScrollEvent);
-	}
-
 	if(o.scrollTop <= 50) {
 		$(o).off('scroll',scrollEvent);
-		scroll('up', reAttachScrollEvent);
-	}
+		scroll('up');
+	} else if(o.offsetHeight + o.scrollTop >= o.scrollHeight - 50){
+		$(o).off('scroll',scrollEvent);
+		scroll('down');
+	}	
 }
 
-$( document ).ready(function() {
+document.addEventListener("DOMContentLoaded", function(){
 	$('#search').on('returnKey', function(event){
 		doSearch($(this).val(), undefined, true);
 	});
