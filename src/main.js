@@ -196,11 +196,14 @@ function updateUi(response, params, customParams){
 		trackRequest(params.getParam("q"));
 	}
 	$('#resultsText').text(resultsText);
-	$('#sortText').text(getSortText(params.getParam("sort")));
 	$('body').attr('query', params.getParam('q'));
 	updateCards(response.response.docs, response.highlighting);
 	updateFacets(response.facet_counts);
 	updateContext(response.response.docs);
+}
+
+function changeSortText(event) {
+	$('#sortText').text(getSortText(event.target.dataset.label));
 }
 
 function buildParams(query, sort){
@@ -289,6 +292,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
 	$('#sort').on('click', function(event) {
 		doSearch($('body')[0].getAttribute('query'), event.target.getAttribute("value"));
+		changeSortText(event);
 	});
 
 	$('#search').keyup(function(e){
