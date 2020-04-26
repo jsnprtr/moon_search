@@ -2,6 +2,8 @@ require('../main.js');
 jest.mock('../search.js');
 const search = require('../search.js');
 const mockSearch = jest.fn();
+const pushState = jest.fn();
+const mockLocation = "http://localhost/test.html";
 
 beforeEach(() => {
   search.Client.mockClear();
@@ -12,6 +14,10 @@ beforeEach(() => {
   });
   mockSearch.mockClear();
   mockSearch.mockReset();
+  delete window.location;
+  window.location = { search: "", href: mockLocation};
+  global.history.pushState = pushState;
+  pushState.mockClear();
 });
 
 test('Test that an initial search is made from the list of default search queries when the dom is loaded', () => {
@@ -23,6 +29,46 @@ test('Test that an initial search is made from the list of default search querie
   expect(mockSearch).toHaveBeenCalledTimes(1);
   const lastCall = mockSearch.mock.calls[0];
   expect(lastCall[0].getParam('q')).toEqual(expect.any(String));
+});
+
+test('Test that the initial search uses the query in the url if present', () => {
+  const searchQuery = "\"I, for one, welcome our new insect overlords\"";
+  const searchQueryEncoded = encodeURI(searchQuery);
+  window.location.search = `?q=${searchQueryEncoded}`;
+
+  window.document.dispatchEvent(new Event("DOMContentLoaded", {
+    bubbles: true,
+    cancelable: true
+  }));
+
+  expect(mockSearch).toHaveBeenCalledTimes(1);
+  const lastCall = mockSearch.mock.calls[0];
+  expect(lastCall[0].getParam('q')).toMatch(searchQuery);
+});
+
+test('That when a search is made, the window location changes', () => {
+  const searchRequest = "\"I believe it was a boaking accident\"";
+  document.body.innerHTML = 
+  `<div class="ui action left icon input focus">
+    <i class="search icon"></i>
+    <input id="search" value="${searchRequest}" type="text" placeholder="Search...">
+    <div id="searchButton" class="ui teal button">Search</div>
+  </div>`;
+
+  window.document.getElementById('search').setAttribute('value', searchRequest);
+
+  window.document.dispatchEvent(new Event("DOMContentLoaded", {
+    bubbles: true,
+    cancelable: true
+  }));
+
+  document.querySelector('#searchButton').click();
+  expect(mockSearch).toHaveBeenCalledTimes(2);
+  expect(mockSearch.mock.calls[1][0].getParam('q')).toMatch(searchRequest);
+
+  expect(pushState).toHaveBeenCalledTimes(2);
+  const newUrl = new URL(pushState.mock.calls[1][2]);
+  expect(newUrl.searchParams.get('q')).toMatch(searchRequest);
 });
 
 test('Test that updateUi is called with search response, original params and any other passed parameters', () => {
