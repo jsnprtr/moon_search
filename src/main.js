@@ -219,10 +219,18 @@ function buildParams(query, sort){
 	return params;
 }
 
+function updateLocation(query) {
+	var url = new URL(window.location.href);
+	url.searchParams.delete('q');
+	url.searchParams.append("q", query);
+	history.pushState({}, document.title, url.toString());
+}
+
 function doSearch(query, sort, track){
 	if(!searchClient) {
 		searchClient = new Client();
 	}
+	updateLocation(query);
 	searchClient.search(buildParams(query, sort), updateUi, {trackRequest: track});
 }
 
@@ -255,6 +263,25 @@ function scrollEvent(event) {
 	}	
 }
 
+function initialSearch() {
+	var searchQueries = [
+		"\"oval room\"",
+		"\"eagle has landed\"",
+		"babe",
+		"\"magnificent desolation\"",
+		"\"one giant leap for mankind\"",
+		"\"oatmeal\"",
+		"\"meatballs\"",
+		"\"Music Out of the Moon\""
+	],
+		params = new URLSearchParams(window.location.search),
+    q = params.get("q");
+
+  var searchQuery = q || searchQueries[Math.floor(Math.random() * searchQueries.length)];
+
+	doSearch(searchQuery);
+}
+
 document.addEventListener("DOMContentLoaded", function(){
 	$('#search').on('returnKey', function(event){
 		doSearch($(this).val(), undefined, true);
@@ -272,19 +299,10 @@ document.addEventListener("DOMContentLoaded", function(){
 		}
 	});
 	$('#searchButton').on('click',function(event){
-		doSearch(event.toElement.parentElement.getElementsByTagName('input')[0].value, undefined, true);
+		doSearch(event.target.parentElement.getElementsByTagName('input')[0].value, undefined, true);
 	});
 	
-	var searchQueries = [
-		"\"oval room\"",
-		"\"eagle has landed\"",
-		"babe",
-		"\"magnificent desolation\"",
-		"\"one giant leap for mankind\"",
-		"\"oatmeal\"",
-		"\"meatballs\"",
-		"\"Music Out of the Moon\""
-	];
-	doSearch(searchQueries[Math.floor(Math.random() * searchQueries.length)]);
 	$('#context').on('scroll', scrollEvent);
+
+	initialSearch();
 });
