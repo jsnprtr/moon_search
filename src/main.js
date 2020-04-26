@@ -163,12 +163,7 @@ function updateFacets(facets){
 		var tx;
 		if(i === 0 || i % 2 === 0){
 			checkbox = document.createElement("div");
-			checkbox.className = "ui checkbox";
-			var input = document.createElement("input");
-			input.setAttribute("type", "checkbox");
-			input.setAttribute("name", facets.facet_fields.transmitter[i]);
 			tx = facets.facet_fields.transmitter[i];
-			$(checkbox).append(input);
 		} else {
 			var label = "<label><b>" + tx + ":</b> "  + txNames[tx] + " (" + facets.facet_fields.transmitter[i] + ")</label>";
 			$(checkbox).append(label);
