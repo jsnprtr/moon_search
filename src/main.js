@@ -4,7 +4,14 @@ var Client = require('./search.js').Client;
 var Card = require('./cards.js').Card;
 var Params = require('./params.js').Params;
 
+var CardParser = require('./cardparser.js').CardParser;
+var timelineupdatetimeout;
+
+var timeLine = require('./timeline.js');
+var TimeLineParser = require('./timelineparser.js').TimeLineParser;
+
 var searchClient;
+
 var TOTAL_SECONDS_QUERY = "sum(mul(86400, day), mul(3600, hour), mul(60, minute), second)";
 var sortMap = {
 	"time": {
@@ -246,6 +253,15 @@ function scroll(direction) {
 	}
 }
 
+function updateTimeline() {
+	var context = $('#context');
+	var cp = new CardParser(context);
+	var topScroll = cp.getTopScrollCard(context[0]);
+	var tlp = new TimeLineParser(timeLine.timeLine);
+	var missionState = tlp.getMissionState(parseInt(topScroll.dataset.datetime));
+	$('#timeline')[0].innerText = missionState;
+}
+
 function reAttachScrollEvent() {
 	$('#context').on('scroll', scrollEvent);
 }
@@ -258,7 +274,16 @@ function scrollEvent(event) {
 	} else if(o.offsetHeight + o.scrollTop >= o.scrollHeight - 50){
 		$(o).off('scroll',scrollEvent);
 		scroll('down');
-	}	
+	}
+
+	if(timelineupdatetimeout) {
+		window.clearTimeout(timelineupdatetimeout);
+
+	}
+
+	timelineupdatetimeout = window.setTimeout(function() {
+		updateTimeline();
+	}, 500);
 }
 
 function initialSearch() {
@@ -270,7 +295,9 @@ function initialSearch() {
 		"\"one giant leap for mankind\"",
 		"\"oatmeal\"",
 		"\"meatballs\"",
-		"\"Music Out of the Moon\""
+		"\"Music Out of the Moon\"",
+		"\"Keep the mice healthy.\"",
+		"\"remember to come in BEF.\""
 	],
 		params = new URLSearchParams(window.location.search),
     q = params.get("q");
